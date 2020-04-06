@@ -18,37 +18,27 @@ abstract class PermissionHandler(private val context: Context) {
                 .all { it }
         }
 
-    fun checkPermissions(activity: Activity?, listener: OnPermissionListener) {
+    fun checkPermissions(activity: Activity?, callback: (permissionsGranted: Boolean) -> Unit) {
         if (permissionsGranted) {
-            listener.onPermissionsGranted()
+            callback.invoke(true)
         } else {
             activity?.let {
-                requestPermissions(activity, listener)
+                requestPermissions(activity, callback)
             }
         }
     }
 
-    private fun requestPermissions(activity: Activity, listener: OnPermissionListener) {
+    private fun requestPermissions(activity: Activity, callback: (permissionsGranted: Boolean) -> Unit) {
         Dexter.withActivity(activity)
             .withPermissions(permissions)
             .withListener(
                 object : BaseMultiplePermissionsListener() {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                        if (report!!.areAllPermissionsGranted()) {
-                            listener.onPermissionsGranted()
-                        } else {
-                            listener.onPermissionsDenied()
-                        }
+                        callback.invoke(report?.areAllPermissionsGranted() == true)
                     }
                 }
             )
             .onSameThread()
             .check()
-    }
-
-    interface OnPermissionListener {
-        fun onPermissionsGranted()
-
-        fun onPermissionsDenied()
     }
 }
