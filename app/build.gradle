@@ -4,14 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 22
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 6
-        versionName "2.0.0"
+        versionName "2.0.1"
     }
 
     buildTypes {
@@ -44,8 +43,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.fondesa:kpermissions:3.3.0'
-    implementation 'com.github.fondesa:kpermissions-coroutines:3.3.0'
+    implementation 'com.github.fondesa:kpermissions:3.4.0'
+    implementation 'com.github.fondesa:kpermissions-coroutines:3.4.0'
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 }
